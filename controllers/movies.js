@@ -1,4 +1,5 @@
 import { Movie } from '../models/movie.js'
+import { Performer } from '../models/performer.js'
 
 function newMovie(req, res) {
     res.render('movies/new', {
@@ -14,7 +15,7 @@ for (let key in req.body) {
 }
 Movie.create(req.body)
 .then(movie => {
-    res.redirect('/movies')
+    res.redirect(`/movies/${movie._id}`)
 })
 .catch(err => {
     res.redirect('/movies')
@@ -36,10 +37,15 @@ Movie.find({})
 
 function show(req, res) {
 Movie.findById(req.params.id)
+.populate('cast')
 .then(movie => {
-    res.render('movies/show', {
+    Performer.find({_id: {$nin: movie.cast}})  //$nin means find the performers that are not added alredy
+    .then(performers => {
+        res.render('movies/show', {
+        title: 'Movie Detail', 
         movie: movie,
-        title: 'Movie Details',
+        performers: performers,
+    })
     })
 })
 .catch(err => {
