@@ -23,7 +23,7 @@
     <%# end cast list %>
   </section>
 	<%# add to cast form below this comment %>
-  <form id="add-per-to-cast" action="???" method="POST">
+  <form id="add-per-to-cast" action="/movies/<%= movie._id %>/performers" method="POST">
     <select name="performerId">
       <% performers.forEach(performer => { %>
         <option value="<%= performer._id %>"><%= performer.name %></option>

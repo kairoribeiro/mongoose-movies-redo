@@ -90,6 +90,7 @@ Movie.findByIdAndUpdate(req.params.id, req.body, {new:true})
 })
 }
 
+//EMBEDING
 function createReview(req, res) {
 Movie.findById(req.params.id)
 .then(movie => {
@@ -104,6 +105,18 @@ Movie.findById(req.params.id)
 })
 }
 
+//REFERENCING
+function addToCast(req, res) {
+    Movie.findById(req.params.id) //find the movie
+    .then(movie => {
+        movie.cast.push(req.body.performerId) //add the performer id to the cast array
+        movie.save() // save the movie
+        .then(() => {
+            res.redirect(`/movies/${movie._id}`) // redirect back to movie details
+        })
+    })
+  }
+
 
 export {
     newMovie as new,
@@ -114,4 +127,5 @@ export {
     edit,
     update,
     createReview,
+    addToCast,
 }
