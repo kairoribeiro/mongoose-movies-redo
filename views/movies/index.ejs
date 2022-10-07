@@ -9,9 +9,7 @@
                     <tr>
                         <th>Title</th>
                         <th>Release Year</th>
-                        <th>Rating</th>
-                        <th>Cast</th>
-                        <th>Now Showing</th>
+                        <th>Details</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,9 +17,12 @@
                             <tr>
                                 <td><%= movie.title %></td>
                                 <td><%= movie.releaseYear %></td>
-                                <td><%= movie.mpaaRating %></td>
-                                <td><%= movie.cast.join(', ') %></td>
-                                <td><%= movie.nowShowing ?  "Yes" : "Nope" %></td>
+                                <td><a href="/movies/<%= movie._id %>">DETAILS</a></td>
+                                <td>
+                                    <form action="/movies/<%= movie._id %>?_method=DELETE" method="POST">
+                                    <button>X</button>
+                                    </form>
+                                </td>
                             </tr>
                             <% });%>
                 </tbody>

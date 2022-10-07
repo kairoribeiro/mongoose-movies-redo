@@ -11,9 +11,13 @@ const movieSchema = new Schema({
         type: Number, 
         default: function() {
             return new Date().getFullYear()
-        }
+        },
+        min: 1927
     },
-    mpaaRating: String,
+    mpaaRating: {
+        type: String,
+        enum: ['G', 'PG', 'PG-13', 'R']
+    },
     cast: [String],
     nowShowing: {type: Boolean, default: false},
 }, {

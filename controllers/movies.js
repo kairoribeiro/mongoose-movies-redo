@@ -14,7 +14,7 @@ req.body.cast = req.body.cast.split(', ')
 // remove empty properties
 for (let key in req.body) {
     if (req.body[key] === '') delete req.body[key]
-  }
+}
 Movie.create(req.body)
 .then(movie => {
     res.redirect('/movies')
@@ -39,8 +39,33 @@ Movie.find({})
 })
 }
 
+function show(req, res) {
+Movie.findById(req.params.id)
+.then(movie => {
+    res.render('movies/show', {
+        movie: movie,
+        title: 'Movie Details',
+    })
+})
+.catch(err => {
+    res.redirect('/movies')
+})
+}
+
+function deleteMovie(req, res) {
+Movie.findByIdAndDelete(req.params.id)
+.then(() => {
+    res.redirect('/movies')
+})
+.catch(err => {
+    res.redirect('/')
+})
+}
+
 export {
     newMovie as new,
     create,
     index,
+    show,
+    deleteMovie as delete,
 }
