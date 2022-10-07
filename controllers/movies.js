@@ -8,9 +8,6 @@ function newMovie(req, res) {
 
 function create(req, res) {
 req.body.nowShowing = !!req.body.nowShowing
-if (req.body.cast) {   // remove whitespace next to commas
-req.body.cast = req.body.cast.split(', ')
-}
 // remove empty properties
 for (let key in req.body) {
     if (req.body[key] === '') delete req.body[key]
@@ -18,8 +15,6 @@ for (let key in req.body) {
 Movie.create(req.body)
 .then(movie => {
     res.redirect('/movies')
-console.log(req.body);
-console.log(movie);
 })
 .catch(err => {
     res.redirect('/movies')
@@ -89,6 +84,20 @@ Movie.findByIdAndUpdate(req.params.id, req.body, {new:true})
 })
 }
 
+function createReview(req, res) {
+Movie.findById(req.params.id)
+.then(movie => {
+    movie.reviews.push(req.body)
+    movie.save()
+    .then(() => {
+        res.redirect(`/movies/${movie._id}`)
+    })
+})
+.catch(err => {
+    res.redirect('/movies')
+})
+}
+
 
 export {
     newMovie as new,
@@ -98,4 +107,5 @@ export {
     deleteMovie as delete,
     edit,
     update,
+    createReview,
 }

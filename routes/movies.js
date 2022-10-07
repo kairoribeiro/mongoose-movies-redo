@@ -18,6 +18,9 @@ router.get('/:id/edit', moviesCtrl.edit)
 //POST localhost:3000/movies
 router.post('/', moviesCtrl.create)
 
+//POST localhost:3000/movies/:id/reviews
+router.post('/:id/reviews', moviesCtrl.createReview)
+
 //DELETE localhost:3000/movies/:id
 router.delete('/:id', moviesCtrl.delete)
 
