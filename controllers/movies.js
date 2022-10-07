@@ -58,9 +58,37 @@ Movie.findByIdAndDelete(req.params.id)
     res.redirect('/movies')
 })
 .catch(err => {
-    res.redirect('/')
+    res.redirect('/movies')
 })
 }
+
+function edit(req, res) {
+Movie.findById(req.params.id)
+.then(movie => {
+    res.render('movies/edit', {
+        movie: movie,
+        title: "Edit Movie"
+    })
+})
+.catch(err => {
+    res.redirect('/movies')
+})
+}
+
+function update(req, res) {
+req.body.nowShowing = !!req.body.nowShowing
+for (let key in req.body) {
+    if(req.body[key] === "") delete req.body[key]
+  }
+Movie.findByIdAndUpdate(req.params.id, req.body, {new:true})
+.then( movie => {
+    res.redirect(`/movies/${movie._id}`)
+})
+.catch(err => {
+    res.redirect('/movies')
+})
+}
+
 
 export {
     newMovie as new,
@@ -68,4 +96,6 @@ export {
     index,
     show,
     deleteMovie as delete,
+    edit,
+    update,
 }

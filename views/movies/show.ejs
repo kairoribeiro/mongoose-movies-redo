@@ -15,6 +15,9 @@
     <div><%= movie.cast.join(', ') %></div>
     <div>Now Showing: </div>
     <div><%= movie.nowShowing ? 'Yes' : 'Nope' %></div>
+    <a href="/movies/<%= movie._id %>/edit">
+      <button>Edit Movie</button>
+    </a>
   </section>
 </main>
   
